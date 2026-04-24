@@ -44,19 +44,36 @@
 
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 
+<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
 <script>
     window.RufflePlayer = window.RufflePlayer || {};
+    let player;
+
     window.addEventListener("load", (event) => {
         const ruffle = window.RufflePlayer.newest();
-        const player = ruffle.createPlayer();
+        player = ruffle.createPlayer();
         const container = document.getElementById("ruffle-viewer");
         container.appendChild(player);
 
-        // This "relative" path fixes CORS issues
         player.load({
-            url: "build_a_dinosaur.swf", 
+            url: "lesson1.swf", 
             allowScriptAccess: true
         });
+    });
+
+    // 2. Fullscreen Logic
+    const fsButton = document.getElementById("fullscreen-btn");
+    
+    fsButton.addEventListener("click", () => {
+        // We target the player element specifically
+        if (player.requestFullscreen) {
+            player.requestFullscreen();
+        } else if (player.webkitRequestFullscreen) { /* Safari */
+            player.webkitRequestFullscreen();
+        } else if (player.msRequestFullscreen) { /* IE11 */
+            player.msRequestFullscreen();
+        }
     });
 </script>
 
